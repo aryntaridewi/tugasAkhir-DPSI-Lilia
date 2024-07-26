@@ -1,0 +1,118 @@
+@baseUrl = https://liliadewiariyanti-production.up.railway.app
+
+### Variables
+@peternakToken = <pastePeternakToken>
+@investorToken = <pasteInvestorToken>
+@adminToken = <pasteAdminToken>
+
+### Register a new Peternak
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "username": "peternak1",
+  "password": "password123",
+  "role": "peternak"
+}
+
+### Register a new Investor
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "username": "investor1",
+  "password": "password123",
+  "role": "investor"
+}
+
+### Register a new Admin
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "username": "admin1",
+  "password": "password123",
+  "role": "admin"
+}
+
+### Login as Peternak
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "username": "peternak1",
+  "password": "password123"
+}
+
+### Login as Investor
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "username": "investor1",
+  "password": "password123"
+}
+
+### Login as Admin
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin1",
+  "password": "password123"
+}
+
+### Create a new Project (as Peternak)
+POST {{baseUrl}}/api/projects
+Authorization: Bearer {{peternakToken}}
+Content-Type: application/json
+
+{
+  "name": "Project Alpha",
+  "description": "A groundbreaking new project.",
+  "photo": "http://example.com/photo.jpg",
+  "businessLicensePhoto": "http://example.com/license.jpg",
+  "bankAccountNumber": "1234567890",
+  "income": 20000,
+  "neededFunds": 10000,
+  "profitSharing": 15
+}
+
+### Get All Projects (Investor)
+GET {{baseUrl}}/api/projects
+Authorization: Bearer {{investorToken}}
+
+### Invest in a Project (Investor)
+POST {{baseUrl}}/api/projects/1/invest
+Authorization: Bearer {{investorToken}}
+Content-Type: application/json
+
+{
+  "amount": 15000
+}
+
+### Get Admin Waiting List
+GET {{baseUrl}}/api/admin/waiting-list
+Authorization: Bearer {{adminToken}}
+
+### Approve a Project (Admin)
+POST {{baseUrl}}/api/admin/projects/1
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "status": "approved"
+}
+
+### Reject a Project (Admin)
+POST {{baseUrl}}/api/admin/projects/4
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "status": "rejected"
+}
+
+### Test: Get Investments for Project Peternak dapat melihat Siapa yang berinvestasi ke mereka
+GET {{baseUrl}}/api/projects/1/investments
+Authorization: Bearer {{peternakToken}}
